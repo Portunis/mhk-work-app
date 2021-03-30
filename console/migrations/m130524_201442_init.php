@@ -26,6 +26,7 @@ class m130524_201442_init extends Migration
             'passport' => $this->integer(9)->unique(),
             'phone' => $this->bigInteger(11)->unique(),
             'position' => $this->string(150),
+            'image' => $this->string(250),
 
 
             'status' => $this->smallInteger()->notNull()->defaultValue(10),

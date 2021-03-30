@@ -2,21 +2,18 @@
 
 namespace frontend\controllers;
 
-use common\models\ImageUpload;
-use common\models\Request;
 use Yii;
-use common\models\User;
+use common\models\Recall;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 /**
- * UserController implements the CRUD actions for User model.
+ * RecallController implements the CRUD actions for Recall model.
  */
-class UserController extends Controller
+class RecallController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -28,18 +25,11 @@ class UserController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['index', 'update','image-work'],
+                        'actions' => [ 'create'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                    [
-                        'actions' => ['people', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                        'matchCallback' => function ($rule, $action) {
-                            return Yii::$app->user->identity->isDoctor;
-                        }
-                    ],
+
                 ],
             ],
             'verbs' => [
@@ -52,22 +42,22 @@ class UserController extends Controller
     }
 
     /**
-     * Lists all User models.
+     * Lists all Recall models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $user = User::find()->andWhere(['id' => Yii::$app->user->identity->getId()])->all();
-        $request = Request::find()->andWhere(['user_id' => Yii::$app->user->identity->getId()])->all();
-        return $this->render('index',
-            [
-                'user' => $user,
-                'request' => $request
-            ]);
+        $dataProvider = new ActiveDataProvider([
+            'query' => Recall::find(),
+        ]);
+
+        return $this->render('index', [
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
-     * Displays a single User model.
+     * Displays a single Recall model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -80,25 +70,29 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a new User model.
+     * Creates a new Recall model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new User();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Recall::find(),
+        ]);
+        $model = new Recall();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['/recall/create']);
         }
 
         return $this->render('create', [
             'model' => $model,
+            'dataProvider' => $dataProvider,
         ]);
     }
 
     /**
-     * Updates an existing User model.
+     * Updates an existing Recall model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -109,7 +103,7 @@ class UserController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['/user/']);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -118,7 +112,7 @@ class UserController extends Controller
     }
 
     /**
-     * Deletes an existing User model.
+     * Deletes an existing Recall model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -132,47 +126,18 @@ class UserController extends Controller
     }
 
     /**
-     * Finds the User model based on its primary key value.
+     * Finds the Recall model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return User the loaded model
+     * @return Recall the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = User::findOne($id)) !== null) {
+        if (($model = Recall::findOne($id)) !== null) {
             return $model;
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
-    }
-    //Фото
-    public function actionImageWork($id){
-
-        $model = new ImageUpload;
-
-        if (Yii::$app->request->isPost){
-
-            $user = User::find()->where(['id' => $id])->one();
-            $file = UploadedFile::getInstance($model, 'image');
-
-
-
-            if ($user->saveImage($model->uploadFile($file, $user->image)))
-            {
-                return $this->redirect(['/user/']);
-            }
-        }
-
-
-        return $this->renderAjax('image',['model'=>$model]);
-    }
-    //
-    public function actionPeople(){
-        $user = Request::find()->andWhere(['employee_id' => Yii::$app->user->identity->getId()])->all();
-        return $this->render('people',
-            [
-                'user' => $user,
-            ]);
     }
 }

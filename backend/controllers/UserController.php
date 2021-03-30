@@ -52,9 +52,7 @@ class UserController extends Controller
     public function actionIndex()
     {
         $dataProvider = new ActiveDataProvider([
-            'query' => User::find()->where(['status' => User::STATUS_INACTIVE])->orderBy('status DESC')
-
-
+            'query' => User::find()->where(['status' => User::STATUS_ACTIVE])->orderBy('status DESC')
         ]);
 
         return $this->render('index', [

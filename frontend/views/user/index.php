@@ -19,13 +19,17 @@ $this->title = 'Админ панель';
                     </div>
 
                 </div>
+
             </div>
+
         </section>
 
-        <?php foreach ($user as $one): ?>
+
             <section class="content">
                 <div class="container-fluid">
                     <div class="row">
+
+                        <?php foreach ($user as $one): ?>
                         <div class="col-md-3">
 
 
@@ -36,19 +40,13 @@ $this->title = 'Админ панель';
                                     </div>
 
                                     <h3 class="profile-username text-center"><?= $one->fio; ?></h3>
-
-                                    <p class="text-muted text-center">
-                                        Должность:<br>
-                                        <?= $one->position; ?>
-                                    </p>
-
                                 </div>
 
                             </div>
 
 
 
-                            <div class="card card-primary">
+                            <div class="card card-primary m-3">
                                 <div class="card-header">
                                     <h3 class="card-title">Мои данные</h3>
                                 </div>
@@ -85,9 +83,9 @@ $this->title = 'Админ панель';
                             </div>
 
                         </div>
-                        <div class="card">
+                        <div class="card m-3">
                             <div class="card-header border-0">
-                                <h3 class="card-title">Заявки врача: <?= Yii::$app->user->identity->fio ?></h3>
+                                <h3 class="card-title">Мои заявки: <?= Yii::$app->user->identity->fio ?></h3>
                                 <div class="card-tools">
                                     <a href="#" class="btn btn-tool btn-sm">
                                         <i class="fas fa-download"></i>
@@ -97,14 +95,14 @@ $this->title = 'Админ панель';
                                     </a>
                                 </div>
                             </div>
-                            <div class="card-body table-responsive p-0">
+                            <div class="card-body table-responsive p-0 ">
                                 <table class="table table-striped table-valign-middle">
                                     <thead>
                                     <tr>
                                         <th>Название</th>
                                         <th>Описание</th>
                                         <th>Дата</th>
-                                        <th>More</th>
+                                        <th>Статус</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -115,15 +113,19 @@ $this->title = 'Админ панель';
 
                                                 <?=  $one->title; ?>
                                             </td>
-                                            <td> <?=  $one->description; ?></td>
+                                            <td><?= \yii\helpers\StringHelper::truncate($one->description,20); ?></td>
                                             <td>
                                                 <?=  $one->date; ?>
                                             </td>
                                             <td>
-                                                <a href="#" class="text-muted">
-                                                    <i class="fas fa-search"></i>
-                                                </a>
+                                                <?php
+                                                if ($model->status == 0) echo ' <span class="badge badge-danger">Ожидание</span>';
+                                                if ($model->status == 1) echo ' <span class="badge badge-success">Обработано</span>'; ?>
                                             </td>
+                                            <td>
+                                              <a href="/request/view?id=<?= $one->id; ?>">Просмотр </a>
+                                            </td>
+
                                         </tr>
                                     <?php endforeach; ?>
 
@@ -132,10 +134,11 @@ $this->title = 'Админ панель';
                                 </table>
                             </div>
                         </div>
-
                     </div>
+
                     <br>
-                    <a class="btn btn-success" id="photo" data-key="<?=  Yii::$app->user->identity->getId() ?>" data-name="<?=  Yii::$app->user->identity->username ?> "><i class="fa fa-edit m-right-xs"></i>Редактировать профиль</a>
+                    <a class="btn btn-success m-2" href="/user/update/?id= <?= Yii::$app->user->identity->getId() ?>">Настройка профиля</a><br>
+                    <a class="btn btn-success m-2" id="photo" data-key="<?=  Yii::$app->user->identity->getId() ?>" data-name="<?=  Yii::$app->user->identity->username ?> "><i class="fa fa-edit m-right-xs"></i>Добавить фото</a>
                 </div>
             </section>
         <?php endforeach; ?>

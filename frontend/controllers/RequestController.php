@@ -25,9 +25,17 @@ class RequestController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => [ 'create',],
+                        'actions' => [ 'create','view',],
                         'allow' => true,
                         'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => [ 'create','view','update'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->isDoctor;
+                        }
                     ],
 
                 ],
@@ -79,7 +87,7 @@ class RequestController extends Controller
         $model = new Request();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['/user/']);
         }
 
         return $this->render('create', [
@@ -118,7 +126,7 @@ class RequestController extends Controller
     {
         $this->findModel($id)->delete();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['/user/']);
     }
 
     /**

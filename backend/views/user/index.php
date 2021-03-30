@@ -1,11 +1,12 @@
 <?php
 
+use backend\assets\LoginAsset;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-
+LoginAsset::register($this);
 $this->title = 'Пользователь';
 $this->params['breadcrumbs'][] = $this->title;
 ?>

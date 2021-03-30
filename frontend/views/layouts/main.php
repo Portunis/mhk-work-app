@@ -37,9 +37,11 @@ AppAsset::register($this);
     ]);
     $menuItems = [
         ['label' => 'Главная', 'url' => ['/site/index']],
+        ['label' => 'Заявки', 'url' => ['/user/people'], 'visible' => Yii::$app->user->identity->isDoctor && !Yii::$app->user->isGuest],
         ['label' => 'Новости', 'url' => ['/article']],
-        ['label' => 'Личный кабинет', 'url' => ['/user/index']],
-        ['label' => 'Заявка', 'url' => ['/request/create']],
+        ['label' => 'Отзывы', 'url' => ['/recall/create'],'visible' => !Yii::$app->user->isGuest],
+        ['label' => 'Личный кабинет', 'url' => ['/user/index'], 'visible' => !Yii::$app->user->isGuest],
+        ['label' => 'Заявка', 'url' => ['/request/create'],'visible' => Yii::$app->user->identity->isUser && !Yii::$app->user->isGuest],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
@@ -49,7 +51,7 @@ AppAsset::register($this);
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
                 'Logout (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
+                ['class' => 'btn btn-link']
             )
             . Html::endForm()
             . '</li>';
@@ -72,9 +74,9 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <?= Html::encode(Yii::$app->name) ?> <?= date('Y') ?></p>
+        <p class="pull-left">&copy; <a href="https://portunis.pw">Portunis</a></p>
 
-        <p class="pull-right"><?= Yii::powered() ?></p>
+
     </div>
 </footer>
 

@@ -69,6 +69,20 @@ class User extends ActiveRecord implements IdentityInterface
             ['fio', 'string'],
             ['position','default', 'value' => self::STATUS_ACTIVE],
             [['inn', 'passport', 'polis','phone'], 'integer'],
+            [['inn', 'passport', 'polis','phone'], 'unique'],
+        ];
+    }
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'username' => 'Логин',
+            'fio' => 'ФИО',
+            'phone' => 'Телефон',
+            'polis' => 'Полис',
+            'inn' => 'ИНН',
+            'passport' => 'Паспорт',
+            'password' => 'Пароль'
         ];
     }
 

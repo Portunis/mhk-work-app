@@ -16,8 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('Удалить', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -34,8 +33,18 @@ $this->params['breadcrumbs'][] = $this->title;
             'description:ntext',
             'date',
             'user.username',
-            'user.fio',
-            'status',
+            'employee_id',
+            [
+                'label' => 'Статус записи',
+                'attribute' => 'status',
+                'value' => function ($data) {
+                    if ($data->status == 0 ) return 'Ожидание';
+                    if ($data->status == 1 ) return 'Обработано';
+
+                },
+                'filter' => ['0' => 'Модерация', '1' => 'Опубликована'],
+                'filterInputOptions' => ['prompt' => 'Все статусы', 'class' => 'form-control', 'id' => null]
+            ],
         ],
     ]) ?>
 

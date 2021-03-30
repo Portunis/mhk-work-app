@@ -45,9 +45,10 @@ $this->title = 'Админ панель';
                <?=  $one->date; ?>
            </td>
            <td>
-               <a href="#" class="text-muted">
-                   <i class="fas fa-search"></i>
-               </a>
+               <?=  $one->employee_id; ?>
+           </td>
+           <td>
+               <a href="/request/view?id=<?= $one->id; ?>">Просмотр </a>
            </td>
        </tr>
    <?php endforeach; ?>

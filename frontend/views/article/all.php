@@ -22,7 +22,7 @@ $this->title = 'Клиника';
                     <div class="col-lg-4">
                         <h2><?= $one->title; ?></h2>
 
-                        <p><?= $one->description; ?> </p>
+                        <p><?=  \yii\helpers\StringHelper::truncate($one->description,150);?> </p>
 
                         <?= \yii\bootstrap\Html::a('Читать &raquo;',['article/one','url'=>$one->url], ['class' => 'btn btn-default']) ?>
 

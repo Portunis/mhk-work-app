@@ -247,6 +247,10 @@ class User extends ActiveRecord implements IdentityInterface
     {
         return $this->status == self::STATUS_ADMIN;
     }
+    public function getIsDoctor()
+    {
+        return $this->status == self::STATUS_DOCTOR;
+    }
 
     public function getRequests()
     {

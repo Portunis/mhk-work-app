@@ -2,8 +2,9 @@
 
 namespace frontend\controllers;
 
+use common\models\Article;
 use Yii;
-use common\models\article;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -27,7 +28,7 @@ class ArticleController extends Controller
     {
         $blogs = Article::find()->andWhere(['url'=>$url])->one();
 
-        return $this->render('One', [
+        return $this->render('one', [
             'blog' => $blogs,
         ]);
     }

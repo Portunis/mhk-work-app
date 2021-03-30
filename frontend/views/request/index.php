@@ -24,9 +24,6 @@ LoginAsset::register($this);
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-
-
-
             'title',
             'description:ntext',
             'date',

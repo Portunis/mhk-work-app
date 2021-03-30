@@ -3,9 +3,11 @@
 namespace frontend\controllers;
 
 use common\models\ImageUpload;
+use common\models\Request;
 use Yii;
 use common\models\User;
 use yii\data\ActiveDataProvider;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -22,6 +24,24 @@ class UserController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'update',],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'actions' => ['people', 'index'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function ($rule, $action) {
+                            return Yii::$app->user->identity->isDoctor;
+                        }
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
@@ -38,9 +58,11 @@ class UserController extends Controller
     public function actionIndex()
     {
         $user = User::find()->andWhere(['id' => Yii::$app->user->identity->getId()])->all();
+        $request = Request::find()->andWhere(['id' => Yii::$app->user->identity->getId()])->all();
         return $this->render('index',
             [
                 'user' => $user,
+                'request' => $request
             ]);
     }
 
@@ -146,4 +168,11 @@ class UserController extends Controller
         return $this->renderAjax('image',['model'=>$model]);
     }
     //
+    public function actionPeople(){
+        $user = Request::find()->andWhere(['employee_id' => Yii::$app->user->identity->getId()])->all();
+        return $this->render('people',
+            [
+                'user' => $user,
+            ]);
+    }
 }

@@ -39,7 +39,7 @@ AppAsset::register($this);
         ['label' => 'Главная', 'url' => ['/site/index']],
         ['label' => 'Новости', 'url' => ['/article']],
         ['label' => 'Личный кабинет', 'url' => ['/user/index']],
-        ['label' => 'Заявка', 'url' => ['/request/index']],
+        ['label' => 'Заявка', 'url' => ['/request/create']],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];

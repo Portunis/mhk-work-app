@@ -38,7 +38,7 @@ $this->title = 'Админ панель';
                                 <h3 class="profile-username text-center"><?= $one->fio; ?></h3>
 
                                 <p class="text-muted text-center">
-                                    Должность:<br>
+                                    Вы вошли как:<br>
                                     <?= $one->position; ?>
                                 </p>
 
@@ -89,7 +89,8 @@ $this->title = 'Админ панель';
 
                 </div>
                 <br>
-                <a class="btn btn-success" id="photo" data-key="<?=  Yii::$app->user->identity->getId() ?>" data-name="<?=  Yii::$app->user->identity->username ?> "><i class="fa fa-edit m-right-xs"></i>Редактировать профиль</a>
+                <a class="btn btn-success m-2" href="/user/update/?id= <?= Yii::$app->user->identity->getId() ?>">Настройка профиля</a><br>
+                <a class="btn btn-success" id="photo" data-key="<?=  Yii::$app->user->identity->getId() ?>" data-name="<?=  Yii::$app->user->identity->username ?> "><i class="fa fa-edit m-right-xs"></i>Добавить фото</a>
             </div>
         </section>
         <?php endforeach; ?>

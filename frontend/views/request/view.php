@@ -32,7 +32,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'description:ntext',
             'date',
-            'user.username',
+            'user.fio',
+            'user.phone',
             'employee_id',
             [
                 'label' => 'Статус записи',

@@ -64,7 +64,7 @@ class SignupForm extends Model
         if (!$this->validate()) {
             return null;
         }
-        
+
         $user = new User();
         $user->username = $this->username;
         $user->email = $this->email;
@@ -80,6 +80,17 @@ class SignupForm extends Model
         $user->generateEmailVerificationToken();
         return $user->save() && $this->sendEmail($user);
 
+    }
+    public function attributeLabels()
+    {
+        return [
+
+            'username' => 'Логин',
+            'password' => 'Пароль',
+            'fio' => 'ФИО',
+            'phone' => 'Телефон',
+
+        ];
     }
 
     /**
@@ -100,4 +111,5 @@ class SignupForm extends Model
             ->setSubject('Account registration at ' . Yii::$app->name)
             ->send();
     }
+
 }

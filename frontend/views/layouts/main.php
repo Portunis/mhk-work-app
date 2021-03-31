@@ -44,8 +44,8 @@ AppAsset::register($this);
         ['label' => 'Заявка', 'url' => ['/request/create'],'visible' => Yii::$app->user->identity->isUser && !Yii::$app->user->isGuest],
     ];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Регистрация', 'url' => ['/site/signup']];
+        $menuItems[] = ['label' => 'Авторизация', 'url' => ['/site/login']];
     } else {
         $menuItems[] = '<li>'
             . Html::beginForm(['/site/logout'], 'post')

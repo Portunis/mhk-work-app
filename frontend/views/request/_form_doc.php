@@ -11,25 +11,9 @@ use yii\widgets\ActiveForm;
 
 <div class="request-form">
 
-    <?php $form = ActiveForm::begin();
+    <?php $form = ActiveForm::begin();?>
 
-    $items = \common\models\User::find()
-        ->select(['fio'])
-        ->indexBy('id')
-        ->where(['status' => 10])
-        ->column();
-    ?>
-
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
-
-    <?= $form->field($model, 'date')->textInput(['maxlength' => true,'data-date-format'=>'yyyy-mm-dd' ,'id' => 'datepicker']) ?>
-
-
-    <?= $form->field($model, 'employee_id')->dropDownList($items) ?>
-
-
+    <?= $form->field($model, 'status')->dropDownList(['Ожидание','Одобренно']) ?>
 
 
     <div class="form-group">

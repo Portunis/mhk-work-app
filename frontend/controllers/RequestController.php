@@ -25,7 +25,7 @@ class RequestController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => [ 'create','view',],
+                        'actions' => [ 'create','delete',],
                         'allow' => true,
                         'roles' => ['@'],
                     ],

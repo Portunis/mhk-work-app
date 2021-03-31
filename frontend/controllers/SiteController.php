@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\Article;
 use common\models\User;
 use frontend\models\ResendVerificationEmailForm;
 use frontend\models\VerifyEmailForm;
@@ -75,7 +76,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $blog = Article::find()->andWhere(['status'=>1])->orderBy('id DESC')->limit(3)->all();
+        return $this->render('index', [
+            'blog' => $blog,
+        ]);
     }
     /**
      * Logs in a user.

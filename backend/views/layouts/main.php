@@ -38,8 +38,8 @@ AppAsset::register($this);
     $menuItems = [
         ['label' => 'Главная', 'url' => ['/site/index'], 'visible' => Yii::$app->user->identity->isAdmin],
         ['label' => 'Новости', 'url' => ['/article'], 'visible' => Yii::$app->user->identity->isAdmin],
-        ['label' => 'Заявки', 'url' => ['/request/'], 'visible' => Yii::$app->user->identity->isAdmin],
-        ['label' => 'Сотрудники', 'url' => ['/request/'], 'visible' => Yii::$app->user->identity->isAdmin],
+
+        ['label' => 'Сотрудники', 'url' => ['/user/'], 'visible' => Yii::$app->user->identity->isAdmin],
     ];
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Авторизация', 'url' => ['/site/login']];
@@ -48,7 +48,7 @@ AppAsset::register($this);
             . Html::beginForm(['/site/logout'], 'post')
             . Html::submitButton(
                 'Выйти (' . Yii::$app->user->identity->username . ')',
-                ['class' => 'btn btn-link logout']
+                ['class' => 'btn btn-link']
             )
             . Html::endForm()
             . '</li>';

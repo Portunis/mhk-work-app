@@ -19,7 +19,7 @@ class ArticleController extends Controller
 
     public function actionIndex()
     {
-        $blog = Article::find()->andWhere(['status'=>1])->all();
+        $blog = Article::find()->andWhere(['status'=>1])->orderBy('id DESC')->all();
         return $this->render('all', [
             'blog' => $blog,
         ]);

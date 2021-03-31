@@ -67,7 +67,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ADMIN,self::STATUS_DOCTOR,self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
             ['fio', 'string'],
-            ['position','default', 'value' => self::STATUS_ACTIVE],
+            ['position','default', 'value' => 'Пользователь'],
             [['inn', 'passport', 'polis','phone'], 'integer'],
             [['inn', 'passport', 'polis','phone'], 'unique'],
         ];
@@ -80,6 +80,7 @@ class User extends ActiveRecord implements IdentityInterface
             'fio' => 'ФИО',
             'phone' => 'Телефон',
             'polis' => 'Полис',
+            'position' => 'Должность',
             'inn' => 'ИНН',
             'passport' => 'Паспорт',
             'password' => 'Пароль'
